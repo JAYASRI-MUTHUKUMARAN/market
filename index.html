@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Link to your CSS file -->
+    <title>Market Prices</title>
+    <style>
+        /* Specific styles related only to the dynamic output */
+        .output {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .price-list {
+            border: 1px solid #0c84a1;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Market Prices</h1>
+    <label for="region">Select Region:</label>
+    <select id="region">
+        <option value="">--Select Region--</option>
+        <option value="North">North</option>
+        <option value="South">South</option>
+        <option value="East">East</option>
+        <option value="West">West</option>
+        <option value="Central">Central</option>
+    </select>
+
+    <label for="productType">Select Product Type:</label>
+    <select id="productType">
+        <option value="">--Select Product Type--</option>
+        <option value="grains">Grains</option>
+        <option value="vegetables">Vegetables</option>
+    </select>
+
+    <button onclick="showPrices()">Show Prices</button>
+
+    <div class="output">
+        <div class="price-list">
+            <h2>Current Market Prices</h2>
+            <ul id="priceList"></ul>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript code remains unchanged
+        const marketData = {
+            North: { grains: { maida: 40, wheat: 35 }, vegetables: { tomato: 30, onion: 25 } },
+            South: { grains: { maida: 42, wheat: 33 }, vegetables: { tomato: 28, onion: 27 } },
+            East: { grains: { maida: 38, wheat: 34 }, vegetables: { tomato: 29, onion: 26 } },
+            West: { grains: { maida: 41, wheat: 36 }, vegetables: { tomato: 32, onion: 28 } },
+            Central: { grains: { maida: 39, wheat: 32 }, vegetables: { tomato: 31, onion: 24 } }
+        };
+
+        function showPrices() {
+            const region = document.getElementById('region').value;
+            const productType = document.getElementById('productType').value;
+            const outputDiv = document.querySelector('.output');
+            const priceList = document.getElementById('priceList');
+
+            if (region && productType) {
+                outputDiv.style.display = 'block';
+                priceList.innerHTML = '';
+
+                const products = marketData[region][productType];
+                for (let product in products) {
+                    const li = document.createElement('li');
+                    li.textContent = `${product.charAt(0).toUpperCase() + product.slice(1)}: ${products[product]} /per kg`;
+                    priceList.appendChild(li);
+                }
+            } else {
+                alert('Please select both region and product type.');
+            }
+        }
+    </script>
+
+</body>
+</html>
